@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une figure{% endblock %}
+
+{% block monTitre %}Modifier : {{figure.nom}}{% endblock %}
+
+{% block body %}
+{{form_start(form)}}
+    {{form_widget(form)}}
+    <a href="{{path('admin')}}" class="btn btn-primary">Retour</a>
+    <input type="submit" value="valider" class ="btn btn-success">
+{{form_end(form)}}
+
+{% endblock %}

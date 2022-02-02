@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block message %}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endfor %}
+{% endblock %}
+
+    {% block header %}
+    <header id="headerwrap" class="fullheight">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in wow bounceInDown" data-wow-delay="0.5s">We Can Help You <span class="wodry">Discover|Learn|Master</span></div>
+                <div class="intro-heading wow bounceInUp" data-wow-delay="1s">DO<span class="thin">SnowTricks</span></div>
+                <a href="{{path('figures')}}#lestricks" class="page-scroll btn btn-xl btn-negative  wow bounceInDown" data-wow-delay="2s">Tell Me More <i class="fa fa-angle-down fa-2x"></i></a>
+            </div>
+        </div>
+    </header>
+    
+    {% endblock %}
+
+{% block body %}
+
+{% endblock %}

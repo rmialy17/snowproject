@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trick{% endblock %}
+
+
+
+{% block message %}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block body %}
+{% block monTitre %}{{figure.nom}}{% endblock %}
+{% endblock %}
