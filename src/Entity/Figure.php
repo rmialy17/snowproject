@@ -40,13 +40,13 @@ class Figure
     private $categorie;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="figure")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="figures", orphanRemoval=true)
      */
-    private $commentaires;
+    private $comments;
 
     public function __construct()
     {
-        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,30 +102,31 @@ class Figure
         return $this;
     }
 
+
     /**
-     * @return Collection|Commentaire[]
+     * @return Collection|Comments[]
      */
-    public function getCommentaires(): Collection
+    public function getComments(): Collection
     {
-        return $this->commentaires;
+        return $this->comments;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function addComment(Comments $comment): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setFigure($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setFigures($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeComment(Comments $comment): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getFigure() === $this) {
-                $commentaire->setFigure(null);
+            if ($comment->getFigures() === $this) {
+                $comment->setFigures(null);
             }
         }
 

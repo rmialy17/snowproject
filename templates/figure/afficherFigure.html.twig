@@ -14,4 +14,41 @@
 
 {% block body %}
 {% block monTitre %}{{figure.nom}}{% endblock %}
+
+<div class="row align-items-center">
+    <div class="col-2 text-center">
+        <img src="{{asset('images/' ~ figure.image)}}">
+    </div>
+    <div class="col-auto">
+        <div>Catégorie : {{figure.categorie}}</div>
+        <div>Description {{figure.description}}</div>
+    </div>
+
+    <div class="grix xs2 sm3 gutter-0 card">
+        <div class="col-xs2 col-sm3">
+            <h2>Liste des commentaires</h2>
+            {% for comment in figure.comments %}
+  
+                    <h3>Commentaire de {{comment.nickname}}</h3>
+                    <p>Publié le {{comment.createdAt|date("d/m/Y H:i") }}</p>
+                    <div>{{comment.content}}</div>
+                    <p><a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn primary press">Répondre</a></p>
+
+                    {# On affiche les réponses #}
+                    {% for reply in comment.replies %}
+                        <p>Réponse publiée par {{reply.nickname}} le {{reply.createdAt|date("d/m/Y H:i") }}</p>
+                        <div>{{reply.content|raw}}</div>
+                    {% endfor %}
+          
+            {% endfor %}
+        </div>
+        <div class="col-xs2 col-sm3" id="ajout-commentaire">
+            <h2>Ajouter un commentaire</h2>
+          
+        </div>
+    </div>
+</div>
+	
+
+	
 {% endblock %}
