@@ -31,7 +31,7 @@ class AdminController extends AbstractController
     
     /**
      * @Route("/admin/creation", name="creationFigure")
-     * @Route("/admin/{id}", name="modifFigure", methods="GET|POST")
+     * @Route("/admin/modif{id}", name="modifFigure", methods="GET|POST")
      */
     public function modification(Figure $figure= null, Request $request, EntityManagerInterface $em) : Response{
         if(!$figure){
@@ -54,17 +54,15 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/{id}", name="supFigure", methods="SUP")
+     /**
+     * @Route("/suppr{id}", name="supFigure", methods="SUP")
      */
-    public function suppression(Figure $figure, Request $request, EntityManagerInterface $em): Response {
+    public function suppression(Figure $figure, Request $request, EntityManagerInterface $em) {
         if($this->isCsrfTokenValid("SUP".$figure->getId(), $request->get("_token"))){
             $em->remove($figure);
-            $em->persist($figure);
             $em->flush();
-            $this->addFlash('success', "L'action a été effectuée"); 
+            $this->addFlash('success', "La suppression a été effectuée"); 
             return $this->redirectToRoute("admin");   
+         }
     }
-   
-        }
 }

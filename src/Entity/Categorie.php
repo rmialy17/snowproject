@@ -97,4 +97,9 @@ class Categorie
 
         return $this;
     }
+
+     // Register Magic Method to Print the name of the Categorie e.g Rotation
+     public function __toString() {
+        return $this->libelle;
+     }
 }

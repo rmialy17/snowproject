@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Figure;
+use App\Entity\Comments;
+use App\Form\CommentsType;
 use App\Repository\FigureRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,14 +33,36 @@ class FigureController extends AbstractController
     }
 
     /**
-     * @Route("/figure", name="afficher_figure")
+     * @Route("/figure/{id}", name="afficher_figure")
      */
-    public function afficherFigure(FigureRepository $repository, $id)
+    public function afficherFigure(Figure $figure,  Request $request, EntityManagerInterface $em):Response
     {
-        $figure = $repository->find($id);
         return $this->render('figure/afficherFigure.html.twig',[
             "figure" => $figure
         ]);
-    }
+
+        // Partie commentaires
+        // On crée le commentaire "vierge"
+        
+            if(!$figure){
+                $figure = new Figure();
+            }
+            
+            $form = $this->createForm(FigureType::class,$figure);
+            $form->handleRequest($request);
+    
+            if($form->isSubmitted() && $form->isValid()){
+                $em->persist($figure);
+                $em->flush();
+                $this->addFlash('success', "L'action a été effectuée");
+                return $this->redirectToRoute("accueil");
+            }
+    
+            return $this->render('figure/afficherFigure.html.twig',[
+                "figure" => $figure,
+                "form" => $form->createView()
+            ]);
+        }
+    
 
 }
