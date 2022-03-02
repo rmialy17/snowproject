@@ -2,15 +2,19 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Categorie;
+use Faker\Factory;
 use App\Entity\Figure;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Categorie;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+
+        $faker = Factory::create('fr_FR');
+
         $categorie1 = new Categorie();
         $categorie1->setLibelle("Grabs")
                    ->setDescriptionCat("Un grab consiste à attraper la planche avec la main pendant le saut.");

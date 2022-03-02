@@ -26,6 +26,15 @@ class FigureRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    // public function findAllComments() : Query{
+    //     return $this->createQueryBuilder( 'c')
+    //         // ->select('c')
+    //         // ->from(Commentaire::class, 'c')
+    //         // ->where('c.id = ?1')
+    //         // ->orderBy('c.createdAt', 'ASC')
+    //         ->getQuery();
+    // }
+
     // /**
     //  * @return Figure[] Returns an array of Figure objects
     //  */

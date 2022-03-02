@@ -1,21 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
     {# {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %} #}
 
-    <h1>Register</h1>
+    
 
+<div id="page-top" class="index">
+<div class="master-wrapper">
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="images/imageHome2.jpg" data-speed="0.7">
+        <div class="section-inner text-center">
+            <div class="container ">
+                <div class="row">
+                    {# <div class="col-sm-8 col-sm-offset-2 mt30 wow"> #}
+                        <h2 class="section-heading">Inscrivez-vous</h2>
+                        <div class="item-metas text-muted mb30 white">
+                            <span class="meta-item"><i class="pe-icon pe-7s-folder"></i> SNOWTRICKS<span>Website</span></span>
+                            {# <span class="meta-item"><i class="pe-icon pe-7s-ticket"></i> TAGS <span>Photography</span></span> #}
+                            <span class="meta-item"><i class="pe-icon pe-7s-user"></i> AUTHOR <span>Mialy R.</span></span>
+                            <span class="meta-item"><i class="pe-icon pe-7s-comment"></i> DISCOVER<span>all</span></span>
+                            <span class="meta-item post-date"><i class="pe-icon pe-7s-clock"></i> CREATED AT <span> February, 2022</span></span>
+                        </div>
+                    {# </div>     #}
+                        {# <h1>Register</h1>  #}
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div>Email</div>
+      <font color="black">{{ form_widget(registrationForm.email) }}</font>
+        {{ form_errors(registrationForm.email) }}
+        <div>pseudo</div>
+        {{ form_widget(registrationForm.username) }}
+        {{ form_errors(registrationForm.username) }} 
+        <div>Mot de passe</div>
+        {{ form_widget(registrationForm.plainPassword) }} 
+        {{ form_errors(registrationForm.plainPassword) }}
+       
+        <div>Conditions générales d'utilisation : {{ form_widget(registrationForm.agreeTerms) }}</div>
+         <button type="submit" class="btn">Valider</button>
+         {{ form_end(registrationForm) }}
+       
+   
+                        
+                      
+                  
+                </div>
+            </div> 
+            
+        </div>
+    </section>
+</div>
+</div>
+   
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+
 {% endblock %}
