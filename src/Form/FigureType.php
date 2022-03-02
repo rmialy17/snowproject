@@ -2,12 +2,20 @@
 
 namespace App\Form;
 
+use App\Entity\Image;
 use App\Entity\Figure;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FileUploadError;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class FigureType extends AbstractType
 {
@@ -16,12 +24,36 @@ class FigureType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('image')
+            ->add('imagetop_upload',FileType::class, array('required' => false),[
+                 'label' => 'Ajouter/Modifier image principale'
+                   ])
             ->add('categorie', EntityType::class,[
                 'class' => Categorie::class,
-                'choice_label' => 'libelle']);
+                'choice_label' => 'libelle'])
+             // On ajoute le champ "images" dans le formulaire
+            // Il n'est pas lié à la base de données (mapped à false)
+            ->add('images', FileType::class, [
+                'label' => 'Ajouter des images :',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
+            // ->add('videos')
+            ->add('video', UrlType::class, [
+                'label' => 'Ajouter des videos :',
+                'mapped' => false,
+                'required' => false,
+                'allow_file_upload' => [new Regex([
+                    'pattern' =>['/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/']])]])
+                // 'html' => ['/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/']])
+                // 'attr'=> ['/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/']])
+                // 'attr' => [ new Regex([ 
+                                    // 'htmlpattern' => ['/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/']])]
+                                    // ])
+    ;
+            }  
        
-    }
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {

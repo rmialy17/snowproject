@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
-{% block monTitre %}Connexion{% endblock %}
+
 
 
 {% block body %}
+
+
+{# {% block message %}
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{message}}
@@ -16,25 +19,61 @@
 {% for message in app.flashes('warning') %}
         {{ message }}
 {% endfor %}
+{% endblock %} #}
+{% block message %}{% endblock %}
 
-{% if error %}
-    <div class="alert alert-danger">
-        Le login et/ou le mot de passe sont incorrects.
+<div id="page-top" class="index">
+    <div class="master-wrapper">
+        <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="images/imageHome1.jpg" data-speed="0.7">
+            <div class="section-inner text-center">
+                <div class="container ">
+                    <div class="row">
+                        {# <div class="col-sm-8 col-sm-offset-2 mt30 wow"> #}
+                            <h2 class="section-heading">Connectez-vous</h2>
+                            <div class="item-metas text-muted mb30 white">
+                                <span class="meta-item"><i class="pe-icon pe-7s-folder"></i> SNOWTRICKS<span>Website</span></span>
+                                {# <span class="meta-item"><i class="pe-icon pe-7s-ticket"></i> TAGS <span>Photography</span></span> #}
+                                <span class="meta-item"><i class="pe-icon pe-7s-user"></i> AUTHOR <span>Mialy R.</span></span>
+                                <span class="meta-item"><i class="pe-icon pe-7s-comment"></i> DISCOVER<span>all</span></span>
+                                <span class="meta-item post-date"><i class="pe-icon pe-7s-clock"></i> CREATED AT <span> February, 2022</span></span>
+                            </div>
+                        {# </div>     #}
+                            {# <h1>Register</h1>  #}
+                            {% if error %}
+                            <div class="text-danger">
+                             Le login et/ou le mot de passe sont incorrects.
+                            </div>
+                        {% endif %}
+                
+                        <form action="{{path('login')}}" method="post">
+                            <div class="form-group">
+                                <label>Login : </label>
+                                <div><input type="text" style="color:black;text-align:center;" name="_username" value="{{lastUserName}}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password : </label>
+                                <div><input type="password" style="color:black;" required name="_password"></div>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="s'identifier">
+                        </form>
+            
+                        <div class="forgotten_password">
+                            <a href="{{path('app_forgotten_password')}}">Mot de passe oublié</a>
+                        </div>
+           
+       
+                            
+                          
+                      
+                    </div>
+                </div> 
+                
+            </div>
+        </section>
     </div>
-{% endif %}
-<form action="{{path('login')}}" method="post">
-    <div class="form-group">
-        <label>Login : </label>
-        <input type="text" required name="_username" class="form-control" value="{{lastUserName}}">
     </div>
-    <div class="form-group">
-        <label>Password : </label>
-        <input type="password" required name="_password" class="form-control">
-    </div>
-    <input type="submit" class="btn btn-primary" value="s'identifier">
-</form>
-<div class="forgotten_password">
-    <a href="{{path('app_forgotten_password')}}">Mot de passe oublié</a>
-</div>
+
+
+
 
 {% endblock %}

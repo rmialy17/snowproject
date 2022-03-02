@@ -29,10 +29,36 @@
         
         
         {% endblock %}
-        
-        {% block javascripts %}
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+        {% block stylesheetsTemplate %}
+<meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/assets/img/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/assets/img/ico/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/assets/img/ico/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/assets/img/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" href="assets/assets/img/ico/apple-touch-icon-57x57.png">
+
+    <title>Kompleet by Distinctive Themes</title>
+
+    <!-- Bootstrap Core CSS -->
+    {# <link href="assets/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/plugins.css" rel="stylesheet"> #}
+
+    <!-- Custom CSS -->
+    <link href="assets/assets/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="assets/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/assets/css/pe-icons.css" rel="stylesheet">
+{% endblock %}
+{% block javascript %}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+       
             
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,39 +67,40 @@
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
         
-            <script type="text/javascript">
-                $(document).ready(function(){
-                   'use strict';
-                jQuery('#headerwrap').backstretch([
-                  "assets/img/bg/bg1.jpg",
-                  "assets/img/bg/bg2.jpg",
-                  "assets/img/bg/bg3.jpg"
-                ], {duration: 8000, fade: 500});
+<script type="text/javascript">
+    $(document).ready(function(){
+        'use strict';
+    jQuery('#headerwrap').backstretch([
+            "images/imageHome3.jpg",
+            "images/imageHome2.jpg",
+        "images/imageHome1.jpg"
+    ], {duration: 8000, fade: 500});
+
+    $("#mapwrapper").gMap({ controls: false,
+        scrollwheel: false,
+        markers: [{     
+            latitude:40.7566,
+            longitude: -73.9863,
+        icon: { image: "assets/img/marker.png",
+            iconsize: [44,44],
+            iconanchor: [12,46],
+            infowindowanchor: [12, 0] } }],
+        icon: { 
+            image: "assets/img/marker.png", 
+            iconsize: [26, 46],
+            iconanchor: [12, 46],
+            infowindowanchor: [12, 0] },
+        latitude:40.7566,
+        longitude: -73.9863,
+        zoom: 14 });
+});
+</script>
         
-                $("#mapwrapper").gMap({ controls: false,
-                    scrollwheel: false,
-                    markers: [{     
-                        latitude:40.7566,
-                        longitude: -73.9863,
-                    icon: { image: "assets/img/marker.png",
-                        iconsize: [44,44],
-                        iconanchor: [12,46],
-                        infowindowanchor: [12, 0] } }],
-                    icon: { 
-                        image: "assets/img/marker.png", 
-                        iconsize: [26, 46],
-                        iconanchor: [12, 46],
-                        infowindowanchor: [12, 0] },
-                    latitude:40.7566,
-                    longitude: -73.9863,
-                    zoom: 14 });
-            });
-            </script>
-        
-        {% endblock %}
+{% endblock %}
 
     </head>
     <body>
+    {% block maNav %} 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{path('accueil')}}">Snowtricks</a>
@@ -90,12 +117,11 @@
                 </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{path('figures')}}">Accueil</a>
-                </li>  
+                </li>    
+            {% if not app.user %}   
                 <li class="nav-item">
                     <a class="nav-link" href="{{path('figures')}}#lestricks">Tricks</a>
                 </li>  
-            {% if not app.user %}  
-                
                 <li class="nav-item">
                     <a class="nav-link" href="{{path('app_register')}}">inscription</a>
                 </li>
@@ -116,21 +142,102 @@
             </div>
         </div>
     </nav>
-    
-    {% block message %}{% endblock %}
+    {% endblock %}
+  
  
     {% block header %}{% endblock %}
 
     <div id="lestricks"></div>
 
     {% block body %} 
+     {# {% block message %} 
     {% for message in app.flashes('success') %}
     <div class="alert alert-success">
         {{message}}
     </div>
-{% endfor %}
+    {% endfor %}
+    {% endblock %} #}
+
+    {% block message %} 
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+            {{ message }}
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+            {{ message }}
+    {% endfor %}
+    {% endblock %}
+
     <h1 class="m2-p2 text-center">{% block monTitre %}{% endblock %}</h1>
     {% endblock %}</div>
+
+    {% block monFooter %} 
+    <div id="footer-wrapper" class="footer-image-bg">
+        <footer class="white-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <ul class="list-inline social-links wow">
+                            <li>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-dribbble"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-behance"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <span class="copyright">Copyright 2019. Designed by DISTINCTIVE THEMES</span>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+    {% endblock %}
+
+    {% block javascriptTemplate %}
+ <script src="assets/js/jquery.js"></script>
     
+    <script src="assets/js/plugins.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+   
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        'use strict';
+        jQuery('#headerwrap').backstretch([
+            "images/imageHome1.jpg",
+            "images/imageHome2.jpg",
+            "images/imageHome3.jpg"
+        ], {
+            duration: 8000,
+            fade: 500
+        });
+    });
+    </script>
+{% endblock %}
     </body>
 </html>

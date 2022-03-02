@@ -2,13 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\FigureRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\FigureRepository;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=FigureRepository::class)
+ * @UniqueEntity(
+ * fields = {"nom"},
+ * message="La figure existe déjà."
+ * )
  */
 class Figure
 {
@@ -24,29 +35,60 @@ class Figure
      */
     private $nom;
 
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private $imagetop;
+
+     /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  orphanRemoval=true, cascade={"persist"})
+     */
+    private $videos;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="figures")
      */
     private $categorie;
 
+   
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="figures", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="figures", cascade={"remove"})
      */
-    private $comments;
+    private $commentaires;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="figures")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"}, )
+     */
+    private $images;
+
+    /**
+     * * @NotNull(message="Le champ image principale ne peut être vide.")
+     */
+    private $imagetop_upload;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $slug;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,6 +108,23 @@ class Figure
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -78,14 +137,14 @@ class Figure
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImagetop(): ?string
     {
-        return $this->image;
+        return $this->imagetop;
     }
 
-    public function setImage(string $image): self
+    public function setImagetop(string $imagetop): self
     {
-        $this->image = $image;
+        $this->imagetop = $imagetop;
 
         return $this;
     }
@@ -104,32 +163,124 @@ class Figure
 
 
     /**
-     * @return Collection|Comments[]
+     * @return Collection|Commentaire[]
      */
-    public function getComments(): Collection
+    public function getCommentaires(): Collection
     {
-        return $this->comments;
+        return $this->commentaires;
     }
 
-    public function addComment(Comments $comment): self
+    public function addCommentaire(Commentaire $commentaire): self
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setFigures($this);
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setFigures($this);
         }
 
         return $this;
     }
 
-    public function removeComment(Comments $comment): self
+    public function removeCommentaire(Commentaire $commentaire): self
     {
-        if ($this->comments->removeElement($comment)) {
+        if ($this->commentaires->removeElement($commentaire)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getFigures() === $this) {
-                $comment->setFigures(null);
+            if ($commentaire->getFigures() === $this) {
+                $commentaire->setFigures(null);
             }
         }
 
         return $this;
     }
+
+    public function getUser(): ?Utilisateur
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Utilisateur $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setFigures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getFigures() === $this) {
+                $image->setFigures(null);
+            }
+        }
+
+        return $this;
+    }
+
+        /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setFigures($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getFigures() === $this) {
+                $video->setFigures(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImagetopUpload(): ?string
+    {
+        return $this->imagetop_upload;
+    }
+
+    public function setImagetopUpload(string $imagetop_upload): self
+    {
+        $this->imagetop_upload = $imagetop_upload;
+
+        return $this;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 }

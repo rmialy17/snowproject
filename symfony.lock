@@ -100,8 +100,35 @@
     "egulias/email-validator": {
         "version": "3.1.2"
     },
+    "ezsystems/comment-bundle": {
+        "version": "v3.2.0"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
+    },
+    "friendsofsymfony/rest-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "fa845143b7e0a4c70aedd1a88c549e6d977e9ae5"
+        }
+    },
+    "jms/metadata": {
+        "version": "2.6.1"
+    },
+    "jms/serializer": {
+        "version": "3.17.1"
+    },
+    "jms/serializer-bundle": {
+        "version": "3.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
+        }
     },
     "knplabs/knp-components": {
         "version": "v3.5.0"
@@ -111,6 +138,9 @@
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
+    },
+    "liorchamla/faker-prices": {
+        "version": "2.0.0"
     },
     "monolog/monolog": {
         "version": "2.3.5"
@@ -135,6 +165,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.6.0"
+    },
+    "phpoption/phpoption": {
+        "version": "1.8.1"
     },
     "phpspec/prophecy": {
         "version": "v1.15.0"
@@ -613,7 +646,22 @@
     "twig/twig": {
         "version": "v3.3.7"
     },
+    "vich/uploader-bundle": {
+        "version": "1.19",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.7",
+            "ref": "c4f5755b37fb65b9c6a3cbdae91205c15a137ed4"
+        }
+    },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "willdurand/jsonp-callback-validator": {
+        "version": "v2.0.0"
+    },
+    "willdurand/negotiation": {
+        "version": "3.1.0"
     }
 }
