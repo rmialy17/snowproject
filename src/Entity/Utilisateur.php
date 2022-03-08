@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * fields = {"username"},
  * message="L'utilisateur existe déjà."
  * )
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message=" Il existe déjà un compte avec cette adresse email.")
  */
 class Utilisateur implements UserInterface
 {
@@ -28,18 +28,28 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 3,   
+     *      minMessage = "Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères !",
+     *      max = 10,
+     *      maxMessage = "Votre nom d'utilisatateur ne peut contenir plus de {{ limit }} caractères !"
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    
     private $password;
 
-     /**
-     * @Assert\EqualTo(propertyPath="password",message="Les mdp ne correspondent pas")
-     */
-    private $verifPassword;
+    //  /**
+    //  * @Assert\EqualTo(propertyPath="password",message="Les mdp ne correspondent pas")
+    //  */
+    // private $verifPassword;
 
     /**
      * @ORM\Column(type="string", length=255)

@@ -11,8 +11,6 @@ use Symfony\Component\Form\FileUploadError;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -24,33 +22,8 @@ class FigureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class,  [ 
-            'mapped' => false,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez saisir un titre',
-                ]),
-                new Length([
-                    'min' => 5,
-                    'minMessage' => 'Le titre de la figure doit comporter {{ limit }} caractères minimum.',
-                    // max length allowed by Symfony for security reasons
-                    'max' => 10,
-                    'maxMessage' => 'Le titre de la figure ne peut contenir plus de {{ limit }} caractères.', 
-                ])]])
-            // ->add('description')
-            ->add('description', TextType::class,  [ 
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un titre',
-                    ]),
-                    new Length([
-                        'min' => 10,
-                        'minMessage' => 'La description doit comporter {{ limit }} caractères minimum.',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 300,
-                        'maxMessage' => 'Le description ne peut contenir plus de {{ limit }} caractères.', 
-                    ])]])
+            ->add('nom')
+            ->add('description')
             ->add('imagetop_upload',FileType::class, array('required' => false),[
                  'label' => 'Ajouter/Modifier image principale'
                    ])
@@ -67,13 +40,12 @@ class FigureType extends AbstractType
             ])
             // ->add('videos')
             ->add('video', UrlType::class, [
-                // ->add('video', TextType::class, [  
                 'label' => 'Ajouter des videos :',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [new Regex([
                     'pattern'=> '/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/',
-                    'message' => 'Veuillez ajouter une URL valide. Exemple: https://www.youtube.com/embed/GCL7BuX_SqY'])]])
+                    'message' => 'Veuillez saisir une URL valide'])]])
     ;
             }  
        

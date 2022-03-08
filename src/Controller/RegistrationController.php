@@ -22,7 +22,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-// use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
         $user = new Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+        dump($request->request->get('email'));
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -123,13 +123,13 @@ class RegistrationController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // // validate email confirmation link, sets User::isVerified=true and persists
-        // try {
-        //     $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        // } catch (VerifyEmailExceptionInterface $exception) {
-        //     $this->addFlash('verify_email_error', $exception->getReason());
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('verify_email_error', $exception->getReason());
 
-        //     return $this->redirectToRoute('app_register');
-        // }
+            return $this->redirectToRoute('app_register');
+        }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
