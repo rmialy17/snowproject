@@ -915,7 +915,8 @@ section {
 .dark-wrapper p,
 .dark-wrapper a,
 .dark-wrapper,
-.dark-wrapper * {
+.dark-wrapper *
+{
     color: #f3f3f3
 }
 

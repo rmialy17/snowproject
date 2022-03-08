@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -32,12 +33,16 @@ class Figure
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Valid()
+     * )
      */
+
     private $nom;
 
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Valid()
      */
     private $description;
 
