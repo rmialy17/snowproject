@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une figure{% endblock %}
+
+{% block stylesheets %}
+ 
+ <!-- Bootstrap Core CSS -->
+    <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet">  -->
+    <link href="/assets/css/animate.css" rel="stylesheet">
+    <link href="/assets/css/plugins.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/pe-icons.css" rel="stylesheet">
+{% endblock %}
+
+{% block message %} {% endblock %}
+{% block body %}
+
+{# <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> #}
+
+<div id="page-top" class="form-group">
+            <div class="section-inner">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-heading">AJOUTER UNE FIGURE</h2>
+                        <hr> 
+                        {# {{form_start(form)}} #}
+                        {{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
+                        <ul><li><strong><p><div>Nom : </div></p>
+                        {{ form_widget(form.nom) }}</li>
+                        <font color="red">{{ form_errors(form.nom) }}</font>
+                        <li><p><div>Categorie : </div></p>
+                        {{ form_widget(form.categorie) }}</li>
+                        <font color="red">{{ form_errors(form.categorie) }}</font>
+                        <li><p><div>Description :</div></p> 
+                        {{ form_widget(form.description) }}</li>
+                        <font color="red">{{ form_errors(form.description) }}</font> 
+                        <li><p><div>Image principale : </div></p>
+                        {{ form_widget(form.imagetop_upload) }}</li>
+                        {# {% if form.imagetop_upload is null %} #}
+                        <font color="red">{{ form_errors(form.imagetop_upload) }}</font> 
+                        {# {% endif %} #}
+                        {% if form.imagetop_upload is empty %}
+                        <ul><li><font color="red"> Veuillez ajouter une image</font></li></ul> </div>
+                        {% endif %}
+                        <li><p><div>Photos : </div></p>
+                        {{ form_widget(form.images) }}</li>  
+                        <font color="red">{{ form_errors(form.images) }}</font>
+                        <li><p><div>Videos :</div></p> 
+                        <p>{{ form_widget(form.videos) }}</p></li> 
+                        <font color="red">{{ form_errors(form.videos) }}</font></strong></ul>  
+                        <p><button class="btn btn-success" type="submit">Valider</button>
+                            {# <p><button class="btn btn-success" valider="{{ form_widget(form.valider) }}"></button></li>   #}
+                        <a href="{{path('admin')}}" class="btn btn-dark">Retour</a></p>
+                        {{form_end(form)}}
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+{% endblock %}

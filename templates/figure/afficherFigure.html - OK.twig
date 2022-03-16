@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Trick{% endblock %}
+
+{% block stylesheets %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="/carousel.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block message %}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block body %}
+{% block monTitre %}{{figure.nom}}{% endblock %}
+
+
+
+<div class="row align-items-center">
+    <div class="col-2 text-center">
+        <img src="{{ asset('/images/' ~ figure.imagetop) }}" alt="Image" width="150">
+    </div>
+    <div class="col-auto">
+        <div>Catégorie : {{figure.categorie}}</div>
+        <div>Description {{figure.description}}</div>
+    </div>
+
+            {#-----------------------------Carousel Images---------------------------------#}
+                   
+            {% if figure.images is null %} 
+            <p> Aucune photo trouvée dans cette galerie. </p>
+            {% endif %}      
+               
+    <div class="container">
+        <br><p class="text-center">More bootstrap 4 components on <a href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com</a></p>
+        <hr> 
+        <div class="row">
+    <aside class="col-md-6">
+                <p>Découvrez les photos</p>
+               
+         {% if figure.images is not null %}      
+    <div id="carousel1_indicator" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for image in figure.images %}  
+          <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+          {% endfor %} 
+          {# <li data-target="#carousel1_indicator" data-slide-to="1"></li>
+          <li data-target="#carousel1_indicator" data-slide-to="2"></li> #}
+        </ol> 
+           
+        <div class="carousel-inner">
+         {% for image in figure.images %}  
+          {# <div class="item active"> #}
+              <div {% if loop.index0 == 0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}> 
+            <img class="d-block w-100" src="{{ app.request.basepath }}/uploads/{{ image.name }}" alt="">  
+          </div> 
+          {% endfor %}
+          <a class="carousel-control-prev" href="#carousel1_indicator" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Précédent</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel1_indicator" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Suivant</span>
+          </a>
+          {% endif %} 
+ 
+	</div>
+    </aside>
+
+            {#-----------------------------Carousel Video---------------------------------#}
+               
+               
+    
+    <aside class="col-md-6">
+                <p>Découvrez les vidéos</p>
+            {% if figure.videos is null %} 
+            <p> Aucune vidéo trouvée pour cette figure. </p>
+            {% endif %}  
+        {% if figure.videos is not null %}      
+    <div id="carousel2_indicator" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for video in figure.videos %}
+        <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+        {% endfor %} 
+       
+        </ol> 
+        
+        <div class="carousel-inner">
+        {% for video in figure.videos %}  
+        {# <div class="item active"> #}
+            <div {% if loop.index0 == 0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}> 
+            {# <img class="d-block w-100" src="{{ app.request.basepath }}/uploads/{{ image.name }}" alt="">   #}
+            <iframe width="560" height="315" src="{{ app.request.basepath }}{{video.URL}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div> 
+        {% endfor %}
+        <a class="carousel-control-prev" href="#carousel2_indicator" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel2_indicator" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Suivant</span>
+        </a>
+        {% endif %} 
+    </div>
+    </aside>
+
+</div>
+
+
+{% block javascript %}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/carousel.js"></script>
+{% endblock %}
+
+        
+
+             {#-----------------------------Carousel end---------------------------------#}
+    
+             <h2>Liste des commentaires</h2> 
+
+           {% if figure.commentaires is empty %} 
+           <p>Aucun commentaire trouvé pour cette figure. </p>
+           {% endif %}  
+            {% for commentaires in figure.commentaires %}  
+            <a href="{{path('afficher_figure',{'id' : commentaires.id})}}"></a>
+                    <h3><img src="{{ asset('/images/' ~ commentaires.photo) }}">{{commentaires.username}}</h3>
+                    <p>Publié le {{commentaires.createdAt|date("d/m/Y H:i") }}</p>
+                    <div><p>{{commentaires.contenu}}</div></p>
+                    {# <p><a href="#ajout-commentaire" data-reply data-id="{{commentaires.contenu}}" class="btn primary press">Répondre</a></p> #}
+                    {% endfor %} 
+            {% if figure.commentaires is not null %} 
+             <div class="navigation">
+                {{ knp_pagination_render(commentaires) }}
+            {% endif %}  
+            </div>
+        </div>
+            
+    </div>
+</div>
+
+
+{% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+<h2>Ajouter un commentaire</h2>
+{{ form_start(commentForm)}}
+{{form_widget(commentForm)}}
+{{ form_end(commentForm)}}
+{% endif %}
+{% endblock %}

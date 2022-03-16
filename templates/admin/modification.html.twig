@@ -2,13 +2,175 @@
 
 {% block title %}Modifier une figure{% endblock %}
 
-{% block monTitre %}Modifier : {{figure.nom}}{% endblock %}
+{% block stylesheets %}
+    <link href="/assets/carousel.css" rel="stylesheet">
+ <!-- Bootstrap Core CSS -->
+    <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet">  -->
+    <link href="/assets/css/animate.css" rel="stylesheet">
+    <link href="/assets/css/plugins.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/pe-icons.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block body %}
-{{form_start(form)}}
-    {{form_widget(form)}}
-    <a href="{{path('admin')}}" class="btn btn-primary">Retour</a>
-    <input type="submit" value="valider" class ="btn btn-success">
-{{form_end(form)}}
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+            <section class="section-inner text-center">
+                <div class="container ">
+                    <div class="row">
+                            <p><h1 class="section-heading">MODIFIER {{figure.nom}}</h1></p>
+                            <div class="card text-white bg-primary w-50" style="margin:auto;width: 100px;" >
+                                <div class="card-body"> 
+                            <img src="{{asset('/uploads/' ~ figure.imagetop) }}" width="400" height="250">
+                            <p><strong><font color="white"><span class="meta-item"><i class="pe-icon pe-7s-folder"></i> CATEGORIE : <span>{{figure.categorie}}</span></span></p>
+                            <p><span class="meta-item"><i class="pe-icon pe-7s-user"></i> DESCRIPTION : <span>{{figure.description}}</span></span></p></font></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-heading">MODIFIER LA FIGURE</h2>
+                        <hr> 
+                        {{ form_start(form) }}
+                        {# {{ form_start(form, {attr: {novalidate: 'novalidate'}})}} #}
+                        {# {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }} #}
+                        
+                        {% if figure.nom is defined %}
+                        <div style="display:none"> {{ form_widget(form.nom) }}
+                        </p><font color="red">{{ form_errors(form.nom) }}</font></div>
+                        {% endif %}
+                        <p><div>Categorie : {{ form_widget(form.categorie) }}</div></p>
+                        <font color="red">{{ form_errors(form.categorie) }}</font>
+                        <p><div>Description : {{ form_widget(form.description) }}</div></p> 
+                        <font color="red">{{ form_errors(form.description) }}</font>                  
+                        <p><div>Image principale : {{ form_widget(form.imagetop_upload) }}</div></p> 
+                        {% if form.imagetop_upload is defined %}
+                        <font color="red">{{ form_errors(form.imagetop_upload) }}</font>  
+                        {% endif %}
+                        <p><div>Photos : {{ form_widget(form.images) }}</div></p>  
+                        <font color="red">{{ form_errors(form.images) }}</font>
+                        <p><div>Videos : {{ form_widget(form.videos) }}</div></p><br>  
+                        <font color="red">{{ form_errors(form.videos) }}</font>   
+                       
+                        <p><button class="btn btn-success" type="submit">Valider</button>
+                        <a href="{{path('admin')}}" class="btn btn-primary">Retour</a></p>
+                        {{ form_end(form) }} 
+                        {# {{ form_end(form, {render_rest: false}) }} #}
+                    </div>
+                </div>
+            </div>
+        </div>
+     {#-----------------------------Carousel Images---------------------------------#}
+                   
+     {% if figure.images is null %} 
+     <p> Aucune photo trouvée dans cette galerie. </p>
+     {% endif %}      
+        
+<div class="container">
+ <br><h2 class="section-heading text-center">PHOTOS ET VIDEOS</h2>
+ <hr> 
+ <div class="row">
+<aside class="col-md-6">
+         <h2><p>Supprimer des photos</p></h2>
+        
+{% if figure.images is not null %}      
+<div id="carousel1_indicator" class="carousel slide" data-ride="carousel">
+ <ol class="carousel-indicators">
+     {% for image in figure.images %}  
+   <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+   
+   {% endfor %} 
+   {# <li data-target="#carousel1_indicator" data-slide-to="1"></li>
+   <li data-target="#carousel1_indicator" data-slide-to="2"></li> #}
+ </ol> 
+    
+ <div class="carousel-inner">
+  {% for image in figure.images %}  
+   {# <div class="item active"> #}
+    <div {% if loop.index0 == 0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}> 
+     <img class="d-block w-100" width="560" height="315" src="{{ app.request.basepath }}/uploads/{{ image.name }}" alt="">  
+     {% if is_granted ('ROLE_ADMIN') or figure.user == app.user %}
+        <form method="post" class="col" action="{{path('image_delete',{'image_id':image.id})}}" onsubmit="return confirm('Voulez-vous vraiment supprimer ?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{csrf_token('image_delete' ~ image.id)}}">
+            <button class="btn btn-primary delete" type="submit"  value="supprimer">Supprimer</button>
+        </form>
+     {% endif %}  
+   </div> 
+   {% endfor %}
+   <a class="carousel-control-prev" href="#carousel1_indicator" role="button" data-slide="prev">
+     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+     <span class="sr-only"></span>
+   </a>
+   <a class="carousel-control-next" href="#carousel1_indicator" role="button" data-slide="next">
+     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+     <span class="sr-only"></span>
+   </a>
+{% endif %} 
+
+</div>
+</aside>
+
+     {#-----------------------------Carousel Video---------------------------------#}
+        
+        
+
+<aside class="col-md-6">
+         <h4><p>Supprimer des videos</p></h4>
+     {% if figure.videos is null %} 
+     <p> Aucune vidéo trouvée pour cette figure. </p>
+     {% endif %}  
+ {% if figure.videos is not null %}      
+<div id="carousel2_indicator" class="carousel slide" data-ride="carousel">
+ <ol class="carousel-indicators">
+     {% for video in figure.videos %}
+ <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+ {% endfor %} 
+
+ </ol> 
+ 
+ <div class="carousel-inner">
+ {% for video in figure.videos %}  
+     <div {% if loop.index0 == 0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}> 
+     <iframe width="560" height="315" src="{{ app.request.basepath }}{{video.URL}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     {% if is_granted ('ROLE_ADMIN') or figure.user == app.user %}
+     <form method="post" class="col" action="{{path('video_delete',{'video_id':video.id})}}" onsubmit="return confirm('Voulez-vous vraiment supprimer ?');">
+         <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{csrf_token('video_delete' ~ video.id)}}">
+         <button class="btn btn-primary delete" type="submit"  value="supprimer">Supprimer</button>
+     </form>
+     {% endif %} 
+    </div> 
+ {% endfor %}
+ <a class="carousel-control-prev" href="#carousel2_indicator" role="button" data-slide="prev">
+     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+     <span class="sr-only"></span>
+ </a>
+ <a class="carousel-control-next" href="#carousel2_indicator" role="button" data-slide="next">
+     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+     <span class="sr-only"></span>
+ </a>
+ {% endif %} 
+</div>
+</aside>
+
+</div>
+
+<script type="text/javascript" src="/DataTables/media/js/jquery.js"></script>
+<script type="text/javascript" src="/DataTables/media/js/jquery.dataTables.min.js"></script>
+ 
 {% endblock %}

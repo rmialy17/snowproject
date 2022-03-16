@@ -2,19 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Figure;
+use App\Entity\Comments;
+use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
 use App\Form\ResetPassType;
+use App\Form\CommentaireType;
 use App\Form\InscriptionType;
+use App\Form\CommentaireFormType;
 use Symfony\Component\Mime\Email;
+// use Symfony\Component\Validator\Constraints\Email;
+use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CommentaireRepository;
 use App\Repository\UtilisateurRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-// use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -195,4 +208,80 @@ class GlobalController extends AbstractController
 
     }
 
+     /**
+     * @Route("/figure/{slug}", name="afficher_figure")
+     */
+    public function commenterFigure(string $slug, Figure $figure, Request $request, EntityManagerInterface $em):Response
+    {
+
+        
+        // // Partie commentaires
+        // // On crée le commentaire "vierge"
+     
+    
+        $commentaire = new Commentaire();
+        // On génère le formulaire
+        $commentForm = $this->createForm(CommentaireType::class, $commentaire);
+        
+        $commentForm->handleRequest($request);
+        
+        // Traitement du formulaire
+        if($commentForm->isSubmitted() && $commentForm->isValid()){
+            $commentaire->setCreatedAt(new \DateTime('now'));
+            $commentaire->setFigures($figure);
+            // $commentaire->setUser($le_user);
+            // $username = $repo->setUsername(UtilisateurRepository::class, $user);
+            // $commentaire->setUsername(Utilisateur::class, $user);
+            
+            //affiche les propriétés et valeur du user connecté
+             $user = $this->getUser();
+             $commentaire->setUser($user);
+            // dd($user->getUserName()."Token : ".$user->getActivationToken());
+      
+        //    // Récupère tous les objets
+        //     $users = $repo->findAll();
+        //    // On boucle pour récupéter seulement le username des objets
+        //      foreach ($users as $user){
+        //          echo $user->getUsername();  
+
+        // On récupère la photo transmise
+        $photo_upload= $commentForm->get('photo_upload')->getData();
+
+        // On génère un nouveau nom de fichier  
+        if($photo_upload !== null){
+        $fichier = md5(uniqid()) . '.' . $photo_upload->guessExtension();
+
+        // On copie le fichier dans le dossier uploads
+        $photo_upload->move(
+            $this->getParameter('images_directory'),
+            $fichier
+        );
+    
+        // On stocke la photo dans la base de données (son nom)
+        $commentaire->setPhoto($fichier);
+        }
+           
+                $username=$user->getUserName();
+                $commentaire->setUsername($username);
+          
+            // $commentaire->getUtilisateur($utilisateur);
+
+            // On va chercher le commentaire correspondant
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commentaire);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre commentaire a bien été ajouté');
+            return $this->redirectToRoute('admin');    
+ 
+         }  
+            
+
+        return $this->render('figure/afficherFigure.html.twig', [
+            "slug" => $slug,
+            "figure" => $figure,
+            "commentForm" => $commentForm->createView()
+        ]);
+        
+    }
 }
