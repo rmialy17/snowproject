@@ -2,6 +2,10 @@
 
 {% block title %}Inscription{% endblock %}
 
+{% block stylesheets %} 
+<link rel="stylesheet" href="/assets/assets/css/register.css">
+{% endblock %}
+
 {% block body %}
     {# {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -28,23 +32,21 @@
                         {# <h1>Register</h1>  #}
     {{ form_start(registrationForm) }}
         <div>Email</div>
-      <font color="black">{{ form_widget(registrationForm.email) }}</font>
-        {{ form_errors(registrationForm.email) }}
+        {{ form_widget(registrationForm.email) }}
+      <font color="red">{{ form_errors(registrationForm.email) }}</font>
         <div>pseudo</div>
         {{ form_widget(registrationForm.username) }}
-        {{ form_errors(registrationForm.username) }} 
+        <font color="red">{{ form_errors(registrationForm.username) }}</font>
         <div>Mot de passe</div>
         {{ form_widget(registrationForm.plainPassword) }} 
-        {{ form_errors(registrationForm.plainPassword) }}
+        <font color="red"> {{ form_errors(registrationForm.plainPassword) }}</font>
+
        
         <div>Conditions générales d'utilisation : {{ form_widget(registrationForm.agreeTerms) }}</div>
          <button type="submit" class="btn">Valider</button>
          {{ form_end(registrationForm) }}
        
-   
-                        
-                      
-                  
+
                 </div>
             </div> 
             

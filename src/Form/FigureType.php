@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -84,6 +83,8 @@ class FigureType extends AbstractType
             //         'message' => 'Veuillez ajouter une image',
             // ])
             // ]])
+
+
             ->add('categorie', EntityType::class,[
                 'mapped' => true,
                 'required'=> false,
@@ -110,7 +111,7 @@ class FigureType extends AbstractType
                     'message' => 'Veuillez ajouter une URL valide. Exemple: https://www.youtube.com/embed/GCL7BuX_SqY'])]])
             // ->add('valider', SubmitType::class)
             ;
-    ;
+
             }  
        
     

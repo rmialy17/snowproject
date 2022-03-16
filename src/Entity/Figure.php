@@ -33,6 +33,7 @@ class Figure
     private $id;
 
     /**
+
     * @ORM\Column(type="string", length=255, nullable=true)
     * @Assert\NotBlank(
     *      message = "Ce champ est requis !"
@@ -44,10 +45,12 @@ class Figure
     *      maxMessage = "Votre titre de figure ne peut pas contenir plus que {{ limit }} caractères !"
     * )
      */
+
     private $nom;
     
  
     private $nomfig;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -60,6 +63,7 @@ class Figure
      *      max = 10000,
      *      maxMessage = "La description du figure ne peut pas contenir plus que {{ limit }} caractères !"
      * )
+
      */
     private $description;
 
@@ -93,6 +97,7 @@ class Figure
      */
     private $user;
 
+
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"})
      */
@@ -104,6 +109,7 @@ class Figure
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
+
     private $slug;
 
 
@@ -113,6 +119,8 @@ class Figure
         $this->commentaires = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
+
+
     }
 
     public function getId(): ?int
@@ -271,6 +279,7 @@ class Figure
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
             $video->setFigures($this);
+
         }
 
         return $this;
@@ -282,24 +291,13 @@ class Figure
             // set the owning side to null (unless already changed)
             if ($video->getFigures() === $this) {
                 $video->setFigures(null);
+
             }
         }
 
         return $this;
     }
-
-    // public function getVideo(): ?string
-    // {
-    //     return $this->video;
-    // }
-
-    public function setVideo(Video $video): self
-    {
-        $this->video = $video;
-
-        return $this;
-    }
-
+  
     public function getImagetopUpload(): ?string
     {
         return $this->imagetop_upload;
@@ -321,6 +319,7 @@ class Figure
     {
         $this->nomfig = $nomfig;
       
+
         return $this;
     }
 

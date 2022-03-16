@@ -39,6 +39,7 @@
                 </div>
             </section>
 
+
         <div class="form-group">
             <div class="container">
                 <div class="row">
@@ -64,8 +65,7 @@
                         <p><div>Photos : {{ form_widget(form.images) }}</div></p>  
                         <font color="red">{{ form_errors(form.images) }}</font>
                         <p><div>Videos : {{ form_widget(form.videos) }}</div></p><br>  
-                        <font color="red">{{ form_errors(form.videos) }}</font>   
-                       
+                        <font color="red">{{ form_errors(form.videos) }}</font>                     
                         <p><button class="btn btn-success" type="submit">Valider</button>
                         <a href="{{path('admin')}}" class="btn btn-primary">Retour</a></p>
                         {{ form_end(form) }} 
@@ -74,6 +74,7 @@
                 </div>
             </div>
         </div>
+
      {#-----------------------------Carousel Images---------------------------------#}
                    
      {% if figure.images is null %} 

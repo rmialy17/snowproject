@@ -45,7 +45,7 @@ class AdminController extends AbstractController
      * @Route("/admin/creation", name="creationFigure", methods="GET|POST")
      */
     public function creation(UserInterface $user,  Figure $figure= null, Request $request, EntityManagerInterface $em) : Response{
-       
+      
       
             $figure = new Figure();
             $figure->getNom();
@@ -136,6 +136,7 @@ class AdminController extends AbstractController
         }
         //   dd($figure);
 
+
         return $this->render('admin/creation.html.twig',[
             "figure" => $figure,
             "user" => $user,
@@ -148,7 +149,8 @@ class AdminController extends AbstractController
      * @Route("/modifierFigure/{slug}", name="modifFigure", methods="GET|POST")
      */
     public function modification(UserInterface $user, Figure $figure= null, Request $request, EntityManagerInterface $em) : Response{
-       
+
+
         if(!$figure){
             $figure = new Figure();
         } 
@@ -165,6 +167,7 @@ class AdminController extends AbstractController
         // dd($imagetop_upload);  
 
         if($form->isSubmitted() && $form->isValid()){
+
         $figure->setUser($user);
         $figure->getId();
         // dd($nomfig);  
@@ -206,6 +209,7 @@ class AdminController extends AbstractController
             $images = $form->get('images')->getData();
 
             if($images !== null){
+
             // On boucle sur les images
             foreach($images as $image){
                 // On génère un nouveau nom de fichier
@@ -225,6 +229,7 @@ class AdminController extends AbstractController
             }
              // On récupère la video transmise
             $video = $form->get('videos')->getData();
+
              // On stocke la video dans la base de données
             $vid = new Video();
             $vid->setURL($video);
