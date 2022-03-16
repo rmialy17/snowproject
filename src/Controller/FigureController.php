@@ -73,10 +73,12 @@ class FigureController extends AbstractController
             // }
             
             $form = $this->createForm(FigureType::class,$figure);
-            // $form->handleRequest($request);
+            $form->handleRequest($request);
     
             if($form->isSubmitted() && $form->isValid()){
-                $form->handleRequest($request);
+
+//                 $form->handleRequest($request);
+
                 $figure->getImage();
                 $figure->getSlug();
             //   $figure->getCommentaires($commentaires);

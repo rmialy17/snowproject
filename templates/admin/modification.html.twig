@@ -39,30 +39,41 @@
                 </div>
             </section>
 
+
+        <div class="form-group">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="section-heading">MODIFIER LA FIGURE</h2>
                         <hr> 
-                        {{form_start(form)}}
-                        <p><div>Nom : {{ form_widget(form.nom) }}</div></p>
-                        <font color="red">{{ form_errors(form.nom) }}</font>
+                        {{ form_start(form) }}
+                        {# {{ form_start(form, {attr: {novalidate: 'novalidate'}})}} #}
+                        {# {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }} #}
+                        
+                        {% if figure.nom is defined %}
+                        <div style="display:none"> {{ form_widget(form.nom) }}
+                        </p><font color="red">{{ form_errors(form.nom) }}</font></div>
+                        {% endif %}
                         <p><div>Categorie : {{ form_widget(form.categorie) }}</div></p>
                         <font color="red">{{ form_errors(form.categorie) }}</font>
-                        <p><div>Description : {{ form_widget(form.description) }}</div></p>
-                        <font color="red">{{ form_errors(form.description) }}</font> 
+                        <p><div>Description : {{ form_widget(form.description) }}</div></p> 
+                        <font color="red">{{ form_errors(form.description) }}</font>                  
                         <p><div>Image principale : {{ form_widget(form.imagetop_upload) }}</div></p> 
-                        <font color="red">{{ form_errors(form.imagetop_upload) }}</font>
+                        {% if form.imagetop_upload is defined %}
+                        <font color="red">{{ form_errors(form.imagetop_upload) }}</font>  
+                        {% endif %}
                         <p><div>Photos : {{ form_widget(form.images) }}</div></p>  
                         <font color="red">{{ form_errors(form.images) }}</font>
-                        <p><div>Videos : {{ form_widget(form.video) }}</div></p><br>  
-                        <font color="red">{{ form_errors(form.video) }}</font>   
+                        <p><div>Videos : {{ form_widget(form.videos) }}</div></p><br>  
+                        <font color="red">{{ form_errors(form.videos) }}</font>                     
                         <p><button class="btn btn-success" type="submit">Valider</button>
                         <a href="{{path('admin')}}" class="btn btn-primary">Retour</a></p>
-                        {{form_end(form)}}
+                        {{ form_end(form) }} 
+                        {# {{ form_end(form, {render_rest: false}) }} #}
                     </div>
                 </div>
             </div>
+        </div>
 
      {#-----------------------------Carousel Images---------------------------------#}
                    

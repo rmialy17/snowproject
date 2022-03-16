@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+
+use App\Entity\Figure;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommentaireRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
@@ -23,8 +27,9 @@ class Commentaire
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(
-     *      max = 1000,
-     *      maxMessage = "Votre commentaire ne peut pas contenir plus de {{ limit }} caractères !"
+
+     *      max = 2000,
+     *      maxMessage = "Votre commentaire ne peut pas contenir plus que {{ limit }} caractères !"
      * )
      */
     private $contenu;

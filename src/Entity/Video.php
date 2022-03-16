@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+
+use App\Entity\Figure;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VideoRepository;
 use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\NotBlank;
-
 
 
 /**
@@ -23,13 +24,12 @@ class Video
     private $id;
 
   /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */ 
-
+     * @ORM\Column(type="string", length=255)
+     */
     private $URL;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Figure::class, inversedBy="videos")
+     * @ORM\ManyToOne(targetEntity=Figure::class, inversedBy="videos", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $figures;

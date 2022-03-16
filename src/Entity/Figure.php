@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Commentaire;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FigureRepository;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -32,17 +33,37 @@ class Figure
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Valid()
-     * )
+
+    * @ORM\Column(type="string", length=255, nullable=true)
+    * @Assert\NotBlank(
+    *      message = "Ce champ est requis !"
+    * )
+    * @Assert\Length(
+    *      min = 3,
+    *      max = 50,
+    *      minMessage = "Votre titre de figure doit contenir au moins {{ limit }} caractères !",
+    *      maxMessage = "Votre titre de figure ne peut pas contenir plus que {{ limit }} caractères !"
+    * )
      */
 
     private $nom;
+    
+ 
+    private $nomfig;
 
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Valid()
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "La description du figure doit contenir au moins {{ limit }} caractères !",
+     *      max = 10000,
+     *      maxMessage = "La description du figure ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
+
      */
     private $description;
 
@@ -59,6 +80,9 @@ class Figure
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="figures")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
      */
     private $categorie;
 
@@ -73,19 +97,19 @@ class Figure
      */
     private $user;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"}, )
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"})
      */
     private $images;
 
-    /**
-     * * @NotNull(message="Le champ image principale ne peut être vide.")
-     */
+   
     private $imagetop_upload;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
+
     private $slug;
 
 
@@ -94,6 +118,9 @@ class Figure
         $this->comments = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+
+
     }
 
     public function getId(): ?int
@@ -252,6 +279,7 @@ class Figure
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
             $video->setFigures($this);
+
         }
 
         return $this;
@@ -263,12 +291,13 @@ class Figure
             // set the owning side to null (unless already changed)
             if ($video->getFigures() === $this) {
                 $video->setFigures(null);
+
             }
         }
 
         return $this;
     }
-
+  
     public function getImagetopUpload(): ?string
     {
         return $this->imagetop_upload;
@@ -277,6 +306,19 @@ class Figure
     public function setImagetopUpload(string $imagetop_upload): self
     {
         $this->imagetop_upload = $imagetop_upload;
+      
+        return $this;
+    }
+
+    public function getNomfig(): ?string
+    {
+        return $this->nomfig;
+    }
+
+    public function setNomfig(string $nomfig): self
+    {
+        $this->nomfig = $nomfig;
+      
 
         return $this;
     }
