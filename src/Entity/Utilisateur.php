@@ -58,6 +58,9 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     * message="Veuillez saisir votre email"
+     * )
      */
     private $email;
 

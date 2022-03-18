@@ -30,13 +30,15 @@
                         </div>
                     {# </div>     #}
                         {# <h1>Register</h1>  #}
-    {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm, {attr: {'novalidate': 'novalidate'}}) }}
         <div>Email</div>
         {{ form_widget(registrationForm.email) }}
-      <font color="red">{{ form_errors(registrationForm.email) }}</font>
+
+      {{ form_errors(registrationForm.email) }}
         <div>pseudo</div>
         {{ form_widget(registrationForm.username) }}
-        <font color="red">{{ form_errors(registrationForm.username) }}</font>
+        {{ form_errors(registrationForm.username) }}
+
         <div>Mot de passe</div>
         {{ form_widget(registrationForm.plainPassword) }} 
         <font color="red"> {{ form_errors(registrationForm.plainPassword) }}</font>

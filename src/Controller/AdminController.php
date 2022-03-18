@@ -69,7 +69,7 @@ class AdminController extends AbstractController
              $figure->setDescription($description);
 
              $slugger = new AsciiSlugger();    
-             $figure->setSlug($slugger->slug($figure->getNom()));  
+             $figure->setSlug($slugger->slug(strtolower($figure->getNom())));  
               
             //  $imagetop=$figure->getImagetop();
              // $imagetop_upload=$imagetop;
@@ -118,12 +118,12 @@ class AdminController extends AbstractController
                  // On récupère la video transmise
                 $video = $form->get('videos')->getData();   
                 // foreach($videos as $video){
-                // if($video !== null){
+                if($video !== null){
                  // On stocke la video dans la base de données
                 $vid= new Video();
                 $vid->setURL($video);
                 $figure->addVideo($vid);
-            // }
+               }
                 if ($imagetop_upload !== null){
                 $em->persist($figure);
                 $em->flush();
@@ -181,7 +181,7 @@ class AdminController extends AbstractController
 
  
          $slugger = new AsciiSlugger();    
-         $figure->setSlug($slugger->slug($figure->getNom()));  
+         $figure->setSlug($slugger->slug(strtolower($figure->getNom())));  
           
          $imagetop_upload= $form->get('imagetop_upload')->getData();   
          $imagetop=$figure->getImagetop();
@@ -231,10 +231,12 @@ class AdminController extends AbstractController
             $video = $form->get('videos')->getData();
 
              // On stocke la video dans la base de données
+             if($video !== null){
             $vid = new Video();
             $vid->setURL($video);
             $figure->addVideo($vid);
-
+             }
+             
             $em->persist($figure);
             $em->flush();
             $this->addFlash('success', "L'action a été effectuée");

@@ -69,13 +69,15 @@ class GlobalController extends AbstractController
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $util){
+
         return $this->render('global/login.html.twig',[
             "lastUserName" => $util->getLastUsername(),
             "error" => $util->getLastAuthenticationError(),   
-            $this->addFlash('success', "Connexion réussie."),
+          
         ]);
-     
-        return $this->redirectToRoute("accueil");
+
+        $this->addFlash('success', "Connexion réussie.");
+        return $this->redirectToRoute("admin");
     }
 
     /**
@@ -83,7 +85,7 @@ class GlobalController extends AbstractController
      */
     public function logout(){
         return $this->render('global/login.html.twig',[
-            $this->addFlash('success', "Déconnexion réussie."),
+            $this->addFlash('danger', "Vous êtes déconnecté."),
         ]);
         return $this->redirectToRoute("login");
     }
@@ -111,10 +113,10 @@ class GlobalController extends AbstractController
             // Si l'utilisateur n'existe pas
             if ($user === null) {
                 // On envoie une alerte disant que l'adresse e-mail est inconnue
-                $this->addFlash('danger', 'Cette adresse e-mail est inconnue');
+                $this->addFlash('danger', 'Cette adresse e-mail est inconnue.');
                 
                 // On retourne sur la page de connexion
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('login');
             }
 
             // On génère un token
@@ -197,7 +199,7 @@ class GlobalController extends AbstractController
             $entityManager->flush();
 
             // On crée le message flash
-            $this->addFlash('message', 'Mot de passe mis à jour');
+            $this->addFlash('message', 'Votre mot de passe a bien été mis à jour.');
 
             // On redirige vers la page de connexion
             return $this->redirectToRoute('login');

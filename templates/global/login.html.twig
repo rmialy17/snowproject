@@ -7,20 +7,21 @@
 {% block body %}
 
 
-{# {% block message %}
-{% for message in app.flashes('success') %}
+{% block message %}
+{% for message in app.flashes('message') %}
 <div class="alert alert-success">
-    {{message}}
-</div>
+        {{ message }}</div>
 {% endfor %}
 {% for message in app.flashes('danger') %}
-        {{ message }}
+<div class="alert alert-danger">
+        {{ message }}</div>
 {% endfor %}
 {% for message in app.flashes('warning') %}
-        {{ message }}
+<div class="alert alert-warning">
+        {{ message }}</div>
 {% endfor %}
-{% endblock %} #}
-{% block message %}{% endblock %}
+{% endblock %}
+{# {% block message %}{% endblock %} #}
 
 <div id="page-top" class="index">
     <div class="master-wrapper">
