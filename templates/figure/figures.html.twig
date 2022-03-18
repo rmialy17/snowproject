@@ -68,31 +68,6 @@
         {{message}}
     </div>
 {% endfor %}
-
-{# <div id="page-top" class="index">
-    <div class="master-wrapper">
-        <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="images/imageHome2.jpg" data-speed="0.7">
-            <div class="section-inner text-center">
-                <div class="container ">
-                    <div class="row">
-                       
-                            <h2 class="section-heading">SNOWTRICKS</h2>
-                            <div class="item-metas text-muted mb30 white">
-                                <span class="meta-item"><i class="pe-icon pe-7s-folder"></i> SNOWTRICKS<span>Website</span></span>
-                               
-                                <span class="meta-item"><i class="pe-icon pe-7s-user"></i> AUTHOR <span>Mialy R.</span></span>
-                                <span class="meta-item"><i class="pe-icon pe-7s-comment"></i> DISCOVER<span>all</span></span>
-                                <span class="meta-item post-date"><i class="pe-icon pe-7s-clock"></i> CREATED AT <span> February, 2022</span></span>
-                            </div>
-                            {% if admin %}
-                            <a href="{{path('creationFigure')}}"><button class=" btn btn-success">Ajouter une figure</button></a>
-                            {% endif %} 
-                    </div>
-                </div> 
-            </div>
-        </section>
-    </div>
-</div> #}
         
         <div class="container">
             <div class="row">
@@ -105,11 +80,8 @@
                         <a href="{{'figure/' ~ figure.slug}}"><img src="{{asset('/uploads/' ~ figure.imagetop)}}" class="card-img-top" alt="Image" width="150" height="200"></a>
                       <div class="card-body">
                         <h5 class="card-title ">{{figure.nom}}</h5>
-                        {# {% if app.user %} #}
+                      
                         {% if is_granted ('ROLE_ADMIN') or figure.user == app.user %}
-                   
-                        
-                        {# {% endif %}  #} 
                                 <form method="post" class="col" action="{{path('supFigure',{'id':figure.id})}}" onsubmit="return confirm('Voulez-vous vraiment supprimer ?');">
                                 <input type="hidden" name="_method" value="SUP">
                                 <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ figure.id)}}">

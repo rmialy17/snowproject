@@ -43,11 +43,6 @@
 
     <title>Kompleet by Distinctive Themes</title>
 
-    <!-- Bootstrap Core CSS -->
-    {# <link href="assets/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/animate.css" rel="stylesheet">
-    <link href="assets/css/plugins.css" rel="stylesheet"> #}
-
     <!-- Custom CSS -->
     <link href="assets/assets/css/style.css" rel="stylesheet">
 
@@ -111,10 +106,6 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarColor01">
             <ul></ul>
             <ul class="navbar-nav mr-auto">  
-              
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{path('accueil')}}">Accueil</span></a>
-                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{path('figures')}}">Accueil</a>
                 </li>    
@@ -129,7 +120,7 @@
                     <a class="nav-link" href="{{path('login')}}">Connexion</a>
                 </li>
             {% endif %}
-             {# {% else %} #}
+    
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{path('admin')}}">admin</a>
@@ -150,13 +141,6 @@
     <div id="lestricks"></div>
 
     {% block body %} 
-     {# {% block message %} 
-    {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{message}}
-    </div>
-    {% endfor %}
-    {% endblock %} #}
 
     {% block message %} 
     {% for message in app.flashes('success') %}
@@ -182,31 +166,10 @@
         <footer class="white-wrapper">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 text-left">
-                        <ul class="list-inline social-links wow">
-                            <li>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-dribbble"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-behance"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                
 
-                    <div class="col-md-6 text-right">
-                        <span class="copyright">Copyright 2019. Designed by DISTINCTIVE THEMES</span>
+                    <div class="col-md-12 text-right">
+                        <center><span class="copyright" style="color:black;">©Copyright 2022. Mialy RAZAFINDRABE</span></center>
                     </div>
                 </div>
             </div>

@@ -6,22 +6,16 @@ use App\Entity\Image;
 use App\Entity\Video;
 use App\Entity\Figure;
 use App\Form\FigureType;
-use App\Entity\Utilisateur;
 use App\Repository\FigureRepository;
-use Vich\UploaderBundle\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Validator\Constraints\Json;
 
 class AdminController extends AbstractController
 {
@@ -71,12 +65,6 @@ class AdminController extends AbstractController
              $slugger = new AsciiSlugger();    
              $figure->setSlug($slugger->slug(strtolower($figure->getNom())));  
               
-            //  $imagetop=$figure->getImagetop();
-             // $imagetop_upload=$imagetop;
-             // On récupère l image principale transmise
-             // if($imagetop == null){
-            
-            
                  $imagetop_upload= $form->get('imagetop_upload')->getData();
                  // On génère un nouveau nom de fichier
                  if($imagetop_upload !== null){
@@ -127,14 +115,13 @@ class AdminController extends AbstractController
                 if ($imagetop_upload !== null){
                 $em->persist($figure);
                 $em->flush();
-                $this->addFlash('success', "L'action a été effectuée");
+                $this->addFlash('success', "La figure a bien a été ajoutée.");
                 return $this->redirectToRoute('admin');
             }else{
                 $this->addFlash('success', "Echec de l'ajout. Veuillez ajouter une image principale à votre figure");
                 return $this->redirectToRoute('admin');
             }
         }
-        //   dd($figure);
 
         return $this->render('admin/creation.html.twig',[
             "figure" => $figure,
@@ -159,24 +146,14 @@ class AdminController extends AbstractController
         $categorie=$form->get('categorie')->getData();
         $description=$form->get('description')->getData();
         $figure->getImagetop();
-        //  $imagetop_upload= $form->get('imagetop_upload')->getData();    
-        // dd($nomfig);
-       
-        // dd($imagetop_upload);  
-
+        
         if($form->isSubmitted() && $form->isValid()){
         $figure->setUser($user);
         $figure->getId();
-        // dd($nomfig);  
-        // if($nom == null){
-        // // $figure->setNom($nom);}else{
-            // $figure->setNom($nomfig);
-        // }
+     
         $figure->getNom(); 
         $figure->setCategorie($categorie);
-        // $figure->setDescription($description);
 
- 
          $slugger = new AsciiSlugger();    
          $figure->setSlug($slugger->slug(strtolower($figure->getNom())));  
           
@@ -195,12 +172,7 @@ class AdminController extends AbstractController
         // On stocke l'image principale dans la base de données (son nom) 
         $figure->setImagetopUpload($fichier1);
         $imagetop_upload=$figure->setImagetop($fichier1);    
-        }
-        // else{
-        //     $image=$imagetop;
-        //     // $image->setImagetopUpload();
-        //     }
-            
+        } 
  
             // On récupère les images multiples transmises
             $images = $form->get('images')->getData();
@@ -234,12 +206,10 @@ class AdminController extends AbstractController
              
             $em->persist($figure);
             $em->flush();
-            $this->addFlash('success', "L'action a été effectuée");
+            $this->addFlash('success', "La modification a bien été enregistrée.");
             return $this->redirectToRoute("admin");
       
-           } 
-    // dd($figure);    
-    // dd($nom); 
+           }  
 
         return $this->render('admin/modification.html.twig',[
             "figure" => $figure,
