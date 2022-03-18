@@ -70,7 +70,7 @@ class Figure
     private $imagetop;
 
      /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  orphanRemoval=true, cascade={"persist"}, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  orphanRemoval=true, cascade={"persist"})
      */
     private $videos;
 
@@ -94,7 +94,7 @@ class Figure
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"}, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"})
      */
     private $images;
 

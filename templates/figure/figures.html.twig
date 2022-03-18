@@ -67,8 +67,13 @@
     <div class="alert alert-danger">
         {{message}}
     </div>
+<div>
 {% endfor %}
-        
+<br>
+{% if admin %}
+<center><p><a href="{{path('creationFigure')}}"><button class=" btn btn-success">Ajouter une figure</button></a></p></center>
+{% endif %} 
+</div>
         <div class="container">
             <div class="row">
                 {% for figure in figures %}
