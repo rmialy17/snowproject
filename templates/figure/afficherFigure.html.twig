@@ -7,11 +7,6 @@
 
     <link href="/assets/carousel.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/DataTables/media/css/jquery.dataTables.min.css">
-    {# <link rel="shortcut icon" href="/assets/img/ico/favicon.ico">
-    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/ico/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/ico/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/ico/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" href="/assets/img/ico/apple-touch-icon-57x57.png"> #}
 
     <title>Kompleet by Distinctive Themes</title>
 
@@ -90,8 +85,6 @@
 <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
 
 {% endfor %} 
-{# <li data-target="#carousel1_indicator" data-slide-to="1"></li>
-<li data-target="#carousel1_indicator" data-slide-to="2"></li> #}
 </ol> 
  
 <div class="carousel-inner">
@@ -198,13 +191,13 @@
               {{commentaires.createdAt|date("H:i") }}</strong></center>
             </td>
             <td><center><strong>{{commentaires.contenu}}</strong></center></td> 
-          {# <tr><hr></tr> #}
+        
         </tr>   
 
         {% endfor %}
     </tbody>
 </table>
-{# <a href="#" class="save">Save</a> #}
+
 </div>
 </div>
 
@@ -232,7 +225,6 @@
 <script src="/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/DataTables/media/js/jquery.js"></script>
 <script type="text/javascript" src="/DataTables/media/js/jquery.dataTables.min.js"></script>
-<!-- <script type="text/javascript" src="/js/tableau.js"></script> -->
 <script src="/assets/js/plugins.js"></script>
 
 

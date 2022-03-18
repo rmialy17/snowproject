@@ -28,62 +28,20 @@ class FigureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('nom', TextType::class,array('attr' => ['readonly' => true])
-                // )
             ->add('nom',TextType::class,[
                 'mapped' => true,
                 'required'=> false,
                 'empty_data'=> '',
-                // 'constraints' => [
-                //     new NotBlank([
-                //         'message' => 'Veuillez saisir un titre',
                      ])
-                // ]]))
-            // ->add('nomfig',TextType::class,[
-            //         'mapped' => true,
-            //         'required'=> false,
-            //         'empty_data'=> '',
-                    // 'constraints' => [
-                    //     new NotBlank([
-                    //         'message' => 'Veuillez saisir un titre',
-                        //  ])
-                    // ]])
-            // ->add('nom',TextType::class,[
-            //     'mapped' => true,
-            //     'required'=> false,
-            //     'empty_data'=> '',
-                // 'constraints' => [
-                //     new NotBlank([
-                //         'message' => 'Veuillez saisir un titre'
-                    //  ])
-                // ]])
-            // ->add('description')
             ->add('description',TextType::class,[
                 'mapped' => true,
                 'required'=> false,
                 'empty_data'=> '',
-                // 'constraints' => [
-                //     new NotBlank([
-                //         'message' => 'Veuillez saisir un titre',
                      ])
-                // ]])
             ->add('imagetop_upload',FileType::class, array('required' => false),[
                  'label' => 'Ajouter/Modifier image principale',
                  'empty_data' => ' ',
-                // 'constraints' => [
-                //     new NotBlank([
-                //         'message' => 'Veuillez saisir un titre',
                 ])
-                // ]])
-            // ->add('imagetop', HiddenType::class,[
-            // 'required'=> false,
-            // 'mapped' => false,
-            // 'constraints' => [
-            //     new NotBlank([
-            //         'message' => 'Veuillez ajouter une image',
-            // ])
-            // ]])
-
 
             ->add('categorie', EntityType::class,[
                 'mapped' => true,
@@ -100,16 +58,13 @@ class FigureType extends AbstractType
                 'required' => false,
                 'empty_data' =>'',
             ])
-            // ->add('videos')
             ->add('videos', UrlType::class, [
-                // ->add('video', TextType::class, [  
                 'label' => 'Ajouter des videos :',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [new Regex([
                     'pattern'=> '/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/',
                     'message' => 'Veuillez ajouter une URL valide. Exemple: https://www.youtube.com/embed/GCL7BuX_SqY'])]])
-            // ->add('valider', SubmitType::class)
             ;
 
             }  

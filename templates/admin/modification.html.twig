@@ -5,7 +5,6 @@
 {% block stylesheets %}
     <link href="/assets/carousel.css" rel="stylesheet">
  <!-- Bootstrap Core CSS -->
-    <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet">  -->
     <link href="/assets/css/animate.css" rel="stylesheet">
     <link href="/assets/css/plugins.css" rel="stylesheet">
 
@@ -47,9 +46,6 @@
                         <h2 class="section-heading">MODIFIER LA FIGURE</h2>
                         <hr> 
                         {{ form_start(form) }}
-                        {# {{ form_start(form, {attr: {novalidate: 'novalidate'}})}} #}
-                        {# {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }} #}
-                        
                         {% if figure.nom is defined %}
                         <div style="display:none"> {{ form_widget(form.nom) }}
                         </p><font color="red">{{ form_errors(form.nom) }}</font></div>
@@ -69,7 +65,6 @@
                         <p><button class="btn btn-success" type="submit">Valider</button>
                         <a href="{{path('admin')}}" class="btn btn-primary">Retour</a></p>
                         {{ form_end(form) }} 
-                        {# {{ form_end(form, {render_rest: false}) }} #}
                     </div>
                 </div>
             </div>
@@ -95,13 +90,10 @@
    <li data-target="#carousel1_indicator" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
    
    {% endfor %} 
-   {# <li data-target="#carousel1_indicator" data-slide-to="1"></li>
-   <li data-target="#carousel1_indicator" data-slide-to="2"></li> #}
  </ol> 
     
  <div class="carousel-inner">
   {% for image in figure.images %}  
-   {# <div class="item active"> #}
     <div {% if loop.index0 == 0 %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}> 
      <img class="d-block w-100" width="560" height="315" src="{{ app.request.basepath }}/uploads/{{ image.name }}" alt="">  
      {% if is_granted ('ROLE_ADMIN') or figure.user == app.user %}

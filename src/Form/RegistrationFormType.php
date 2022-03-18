@@ -27,7 +27,6 @@ class RegistrationFormType extends AbstractType
                 'pattern'=> '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
                 'message' => 'Veuillez ajouter une adresse email valide. Exemple:snowtricks@gmail.com)'])]])
         ->add('username')
-        // ->add('firstname')
         ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

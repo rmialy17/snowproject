@@ -11,7 +11,6 @@ use App\Form\CommentaireType;
 use App\Form\InscriptionType;
 use App\Form\CommentaireFormType;
 use Symfony\Component\Mime\Email;
-// use Symfony\Component\Validator\Constraints\Email;
 use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CommentaireRepository;
@@ -41,29 +40,6 @@ class GlobalController extends AbstractController
     {
         return $this->render('global/accueil.html.twig');
     }
-
-    // /**
-    //  * @Route("/inscription", name="inscription")
-    //  */
-    // public function inscription(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder){
-    //     $utilisateur = new Utilisateur();
-    //     $form = $this->createForm(InscriptionType::class,$utilisateur);
-    //     $form->handleRequest($request);
-
-    //     if($form->isSubmitted() && $form->isValid()){
-    //         $passwordCrypte = $encoder->encodePassword($utilisateur,$utilisateur->getPassword());
-    //         $utilisateur->setPassword($passwordCrypte);
-    //         $utilisateur->setRoles("ROLE_USER");
-    //         $em->persist($utilisateur);
-    //         $em->flush();
-    //         $this->addFlash('success', "L'inscription a été effectuée"); 
-    //         return $this->redirectToRoute("accueil");
-    //     }
-
-    //     return $this->render('global/inscription.html.twig',[
-    //         "form" => $form->createView()
-    //     ]);
-    // }
 
         /**
      * @Route("/login", name="login")
@@ -141,12 +117,6 @@ class GlobalController extends AbstractController
             ->from('mialy.razaf@gmail.com')
             ->to($user->getEmail())
             ->subject('Mot de passe oublié')
-            // ->html(
-            //     "Bonjour,<br><br>Une demande de réinitialisation de mot de passe a été effectuée pour le site Snowtricks.com. Veuillez cliquer sur le lien suivant : " . $url,
-            //     'text/html',
-            //     $this->$this->renderView(
-            //         'security/reset_password.html.twig', array('token' => $token))
-            // )
             ->html(
                 $this->renderView(
                     'emails/reset_password_email.html.twig', ['token'=> $token]
@@ -219,8 +189,6 @@ class GlobalController extends AbstractController
         
         // // Partie commentaires
         // // On crée le commentaire "vierge"
-     
-    
         $commentaire = new Commentaire();
         // On génère le formulaire
         $commentForm = $this->createForm(CommentaireType::class, $commentaire);
@@ -231,20 +199,10 @@ class GlobalController extends AbstractController
         if($commentForm->isSubmitted() && $commentForm->isValid()){
             $commentaire->setCreatedAt(new \DateTime('now'));
             $commentaire->setFigures($figure);
-            // $commentaire->setUser($le_user);
-            // $username = $repo->setUsername(UtilisateurRepository::class, $user);
-            // $commentaire->setUsername(Utilisateur::class, $user);
             
             //affiche les propriétés et valeur du user connecté
              $user = $this->getUser();
              $commentaire->setUser($user);
-            // dd($user->getUserName()."Token : ".$user->getActivationToken());
-      
-        //    // Récupère tous les objets
-        //     $users = $repo->findAll();
-        //    // On boucle pour récupéter seulement le username des objets
-        //      foreach ($users as $user){
-        //          echo $user->getUsername();  
 
         // On récupère la photo transmise
         $photo_upload= $commentForm->get('photo_upload')->getData();
@@ -269,8 +227,6 @@ class GlobalController extends AbstractController
            
                 $username=$user->getUserName();
                 $commentaire->setUsername($username);
-          
-            // $commentaire->getUtilisateur($utilisateur);
 
             // On va chercher le commentaire correspondant
             $em = $this->getDoctrine()->getManager();

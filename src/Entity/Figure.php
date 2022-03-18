@@ -74,7 +74,7 @@ class Figure
     private $imagetop;
 
      /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="figures",  orphanRemoval=true, cascade={"persist"}, cascade={"remove"})
      */
     private $videos;
 
@@ -99,7 +99,7 @@ class Figure
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="figures", orphanRemoval=true, cascade={"persist"}, cascade={"remove"})
      */
     private $images;
 
@@ -138,11 +138,6 @@ class Figure
         $this->nom = $nom;
 
         return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
     }
 
     public function getContent(): ?string
@@ -321,6 +316,12 @@ class Figure
       
 
         return $this;
+    }
+
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function setSlug(string $slug): self
