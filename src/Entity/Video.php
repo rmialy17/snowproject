@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+
 use App\Entity\Figure;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VideoRepository;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 
 /**

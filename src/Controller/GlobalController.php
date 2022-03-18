@@ -249,8 +249,10 @@ class GlobalController extends AbstractController
         // On récupère la photo transmise
         $photo_upload= $commentForm->get('photo_upload')->getData();
 
+
         // On génère un nouveau nom de fichier  
         if($photo_upload !== null){
+
         $fichier = md5(uniqid()) . '.' . $photo_upload->guessExtension();
 
         // On copie le fichier dans le dossier uploads
@@ -262,6 +264,8 @@ class GlobalController extends AbstractController
         // On stocke la photo dans la base de données (son nom)
         $commentaire->setPhoto($fichier);
         }
+
+
            
                 $username=$user->getUserName();
                 $commentaire->setUsername($username);
@@ -273,9 +277,10 @@ class GlobalController extends AbstractController
             $em->persist($commentaire);
             $em->flush();
 
+
             $this->addFlash('success', 'Votre commentaire a bien été ajouté');
             return $this->redirectToRoute('admin');    
- 
+
          }  
             
 
