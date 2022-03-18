@@ -24,22 +24,22 @@
         {{ form_start(registrationForm, {attr: {'novalidate': 'novalidate'}}) }}
         <div>Email</div>
         {{ form_widget(registrationForm.email) }}
+
       {{ form_errors(registrationForm.email) }}
         <div>pseudo</div>
         {{ form_widget(registrationForm.username) }}
         {{ form_errors(registrationForm.username) }}
+
         <div>Mot de passe</div>
         {{ form_widget(registrationForm.plainPassword) }} 
-        {{ form_errors(registrationForm.plainPassword) }}
+        <font color="red"> {{ form_errors(registrationForm.plainPassword) }}</font>
+
        
         <div>Conditions générales d'utilisation : {{ form_widget(registrationForm.agreeTerms) }}</div>
          <button type="submit" class="btn">Valider</button>
          {{ form_end(registrationForm) }}
        
-   
-                        
-                      
-                  
+
                 </div>
             </div> 
             
