@@ -165,10 +165,12 @@
     </div>
     {% endfor %}
     {% for message in app.flashes('danger') %}
-            {{ message }}
+    <div class="alert alert-danger">
+            {{ message }}</div>
     {% endfor %}
     {% for message in app.flashes('warning') %}
-            {{ message }}
+    <div class="alert alert-success">
+            {{ message }}</div>
     {% endfor %}
     {% endblock %}
 

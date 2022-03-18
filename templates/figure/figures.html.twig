@@ -63,18 +63,23 @@
         {{message}}
     </div>
 {% endfor %}
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+{% endfor %}
 
-<div id="page-top" class="index">
+{# <div id="page-top" class="index">
     <div class="master-wrapper">
         <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="images/imageHome2.jpg" data-speed="0.7">
             <div class="section-inner text-center">
                 <div class="container ">
                     <div class="row">
-                        {# <div class="col-sm-8 col-sm-offset-2 mt30 wow"> #}
+                       
                             <h2 class="section-heading">SNOWTRICKS</h2>
                             <div class="item-metas text-muted mb30 white">
                                 <span class="meta-item"><i class="pe-icon pe-7s-folder"></i> SNOWTRICKS<span>Website</span></span>
-                                {# <span class="meta-item"><i class="pe-icon pe-7s-ticket"></i> TAGS <span>Photography</span></span> #}
+                               
                                 <span class="meta-item"><i class="pe-icon pe-7s-user"></i> AUTHOR <span>Mialy R.</span></span>
                                 <span class="meta-item"><i class="pe-icon pe-7s-comment"></i> DISCOVER<span>all</span></span>
                                 <span class="meta-item post-date"><i class="pe-icon pe-7s-clock"></i> CREATED AT <span> February, 2022</span></span>
@@ -87,7 +92,7 @@
             </div>
         </section>
     </div>
-</div>
+</div> #}
         
         <div class="container">
             <div class="row">

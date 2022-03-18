@@ -28,6 +28,15 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 3,   
+     *      minMessage = "Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères !",
+     *      max = 10,
+     *      maxMessage = "Votre nom d'utilisatateur ne peut contenir plus de {{ limit }} caractères !"
+     * )
      */
     private $username;
 
@@ -48,6 +57,9 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     * message="Veuillez saisir votre email"
+     * )
      */
     private $email;
 

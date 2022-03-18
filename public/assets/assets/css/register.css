@@ -1,0 +1,17 @@
+#registration_form_email{
+background-color: rgb(114, 108, 108);
+}
+
+#registration_form_username{
+background-color: rgb(114, 108, 108);
+}
+
+#registration_form_plainPassword{
+background-color: rgb(114, 108, 108);
+}
+
+li{
+    color: red!important;
+    list-style-type: none;
+}
+
