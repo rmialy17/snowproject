@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 18 mars 2022 à 23:50
+-- Généré le : sam. 19 mars 2022 à 00:26
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.4.9
 
@@ -63,7 +63,19 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id`),
   KEY `IDX_67F068BC5C7F3A37` (`figures_id`),
   KEY `IDX_67F068BCA76ED395` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `commentaire`
+--
+
+INSERT INTO `commentaire` (`id`, `figures_id`, `contenu`, `created_at`, `user_id`, `username`, `photo`) VALUES
+(48, 12, 'Très belle figure', '2022-03-19 00:07:23', 1, 'mialy', NULL),
+(50, 12, 'Super figure', '2022-03-19 00:16:08', 1, 'mialy', '6c40c6c22039230c0273856fe46017b2.jpg'),
+(51, 11, 'Top figure', '2022-03-19 00:21:17', 2, 'edene', '28c718bd7f46773a5f427d700ed9657d.jpg'),
+(52, 11, 'Belle figure', '2022-03-19 00:21:39', 2, 'edene', NULL),
+(53, 12, 'Excellente figure', '2022-03-19 00:22:20', 2, 'edene', NULL),
+(54, 11, 'Impressionnant', '2022-03-19 00:23:09', 2, 'edene', 'd71d3730bc85c383fef92232b51fb393.jpg');
 
 -- --------------------------------------------------------
 
@@ -176,20 +188,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 
 INSERT INTO `utilisateur` (`id`, `username`, `password`, `roles`, `email`, `activation_token`, `reset_token`, `figure_id`) VALUES
 (1, 'mialy', '$2y$13$7bHKxPxe7FjBQ.aDuAg3G.fo1yRrcQzkibPIRu8TUSWQsnm/oo/TK', 'ROLE_ADMIN', '', NULL, NULL, NULL),
-(2, 'edene', '$2y$13$s4Ew2HGzqenS8wN6VLobGup2cFiC6SM3dtM63l9mat6dYFBb/WHl2', 'ROLE_USER', '', NULL, NULL, NULL),
-(3, 'dedenou', '$2y$13$XMa1qjttIIS.QHW9dQ.wBuJky1M9e2EmmSg29QqqhulTAhmuRdON6', 'ROLE_USER', '', NULL, NULL, NULL),
-(7, 'olive', '$2y$13$vF7EhP2SaOg5df4f4TqK4OTEp8W6fpUuigg56BS/GI4ttJbUalcua', 'ROLE_USER', 'mialy.ra', NULL, NULL, NULL),
-(8, 'mimiss', '$2y$13$2D7lt4eE3eegTpzKAe/XNuIbFSMYmQmqZkr9/28PquT68pfn1DD.S', 'ROLE_USER', 'mialy.rz', NULL, NULL, NULL),
-(9, 'olala', '$2y$13$cH.3a4pAS0C.UnlBnEcQgOxihrXStM8ndCo5r3WP28loqujJTX.di', 'ROLE_USER', 'mialjh', NULL, NULL, NULL),
-(22, 'mimoi', '$2y$13$JZj7TNuJDkiIl1pcimXghOSD5XiXQvFND3zm7oVz.qzDBf.8fAYeu', 'ROLE_USER', 'mialy.razaf@gmail.com', NULL, NULL, NULL),
-(23, 'defce', '$2y$13$k7jwLHGsqwzKYON6vc8aWO/UjaCZgPbT81.MAX3Whjm3cvJRSt2dq', 'ROLE_USER', 'mimi2', 'b256e0cb2216dc852b32d0240e27c2e6', NULL, NULL),
-(24, 'dqcdq', '$2y$13$g0Tr/C1TjnQqRm1Mam8QTOmIA8QPiGEma6MqxsjqLaFDHqjgzMJrC', 'ROLE_USER', 'cdcdc', '1395396b75e8e7665424a02175024f94', NULL, NULL),
-(28, 'miadede', '$2y$13$KAKyL0ohJz2u9ofUMOp93uLr529VE/hJXGjFZ0xcTMcDTi4O1282G', 'ROLE_USER', 'mialy.raz@gmail.com', '0d1c8cd254b0ec770126319382735103', NULL, NULL),
-(29, 'mialyr', '$2y$13$McinWg27Vo3mveMPZ4Ts8eYL2amX0VASnx2iF9ko7vuhEtAspD016', 'ROLE_USER', 'mialy', 'e6f163841ae280952f55f011d1acf74d', NULL, NULL),
-(30, 'mialyraza', '$2y$13$ayoX7PhL/sMLrzGBz8T8Te.SaLZznZPbra/mZpz7DZywYWqLiJ7bi', 'ROLE_USER', 'mialyraza', 'f90515010ff4365419c1e6d1946e4033', NULL, NULL),
-(31, 'cqc', '$2y$13$T2ZKdPtTXMwTkEdzYSVgbeMOxzs28OO9WfvVpajqEvjrhMFsqq/xe', 'ROLE_USER', 'cdq', '91781e812bbf4fe7d9456349fba171fa', NULL, NULL),
-(32, 'hte', '$2y$13$wzjNwin1ggNF87otxbLgzOODl3sOIejuOj5BVtEt.d5VPEVqZNr/6', 'ROLE_USER', 'vqdvgq', 'cff4942a73a060cdef102587d7382099', NULL, NULL),
-(33, 'mia', '$2y$13$EH9l20W6pZK.pFZidUkR/uVnUs0c70QKXvfLbkW08/B2rKu1nqzZa', 'ROLE_USER', 'mialy.r@gmail.com', '8fb991e92f7599eeb52ed3b4f82884df', NULL, NULL);
+(2, 'edene', '$2y$13$s4Ew2HGzqenS8wN6VLobGup2cFiC6SM3dtM63l9mat6dYFBb/WHl2', 'ROLE_USER', '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
