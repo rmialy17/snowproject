@@ -42,8 +42,8 @@
 
 {% block title %}Tricks{% endblock %}
 
-
 {% block header %}
+
     {% if not admin %}<header id="headerwrap" class="fullheight">
         <div class="container">
             <div class="intro-text">
@@ -64,6 +64,12 @@
     </div>
 {% endfor %}
 {% for message in app.flashes('danger') %}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+<div>
+{% endfor %}
+{% for message in app.flashes('warning') %}
     <div class="alert alert-danger">
         {{message}}
     </div>
