@@ -3,7 +3,7 @@
 {% block title %}Ajouter une figure{% endblock %}
 
 {% block stylesheets %}
- 
+
  <!-- Bootstrap Core CSS -->
     <link href="/assets/css/animate.css" rel="stylesheet">
     <link href="/assets/css/plugins.css" rel="stylesheet">
@@ -27,6 +27,7 @@
                     <div class="col-md-12">
                         <h2 class="section-heading">AJOUTER UNE FIGURE</h2>
                         <hr> 
+
                         {# {{form_start(form)}} #}
                         {{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
                         <ul><li><strong><p><div>Nom : </div></p>
@@ -39,6 +40,7 @@
                         {{ form_widget(form.description) }}</li>
                         <font color="red">{{ form_errors(form.description) }}</font> 
                         <li><p><div>Image principale : </div></p>
+
                         {{ form_widget(form.imagetop_upload) }}</li>
                         {# {% if form.imagetop_upload is null %} #}
                         <font color="red">{{ form_errors(form.imagetop_upload) }}</font> 
@@ -61,6 +63,7 @@
             </div>
         </div>
     </div>
+
 
 
  

@@ -10,17 +10,11 @@ use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Component\Form\FileUploadError;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints\Collection;
 use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class FigureType extends AbstractType
@@ -28,25 +22,12 @@ class FigureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class,[
-                'mapped' => true,
-                'required'=> false,
-                'empty_data'=> '',
-                     ])
-            ->add('description',TextType::class,[
-                'mapped' => true,
-                'required'=> false,
-                'empty_data'=> '',
-                     ])
+            ->add('nom')
+            ->add('description')
             ->add('imagetop_upload',FileType::class, array('required' => false),[
-                 'label' => 'Ajouter/Modifier image principale',
-                 'empty_data' => ' ',
-                ])
-
+                 'label' => 'Ajouter/Modifier image principale'
+                   ])
             ->add('categorie', EntityType::class,[
-                'mapped' => true,
-                'required'=> false,
-                'empty_data'=> '',
                 'class' => Categorie::class,
                 'choice_label' => 'libelle'])
              // On ajoute le champ "images" dans le formulaire
@@ -55,18 +36,17 @@ class FigureType extends AbstractType
                 'label' => 'Ajouter des images :',
                 'multiple' => true,
                 'mapped' => false,
-                'required' => false,
-                'empty_data' =>'',
+                'required' => false
             ])
-            ->add('videos', UrlType::class, [
+            // ->add('videos')
+            ->add('video', UrlType::class, [
                 'label' => 'Ajouter des videos :',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [new Regex([
                     'pattern'=> '/^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/',
-                    'message' => 'Veuillez ajouter une URL valide. Exemple: https://www.youtube.com/embed/GCL7BuX_SqY'])]])
-            ;
-
+                    'message' => 'Veuillez saisir une URL valide'])]])
+    ;
             }  
        
     
