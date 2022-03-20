@@ -52,8 +52,8 @@ class GlobalController extends AbstractController
           
         ]);
 
-        $this->addFlash('success', "Connexion réussie.");
-        return $this->redirectToRoute("admin");
+        $this->addFlash('success', 'Connexion réussie.');
+        return $this->redirectToRoute('login');
     }
 
     /**
@@ -61,9 +61,10 @@ class GlobalController extends AbstractController
      */
     public function logout(){
         return $this->render('global/login.html.twig',[
-            $this->addFlash('danger', "Vous êtes déconnecté."),
+            $this->addFlash('danger', 'Vous êtes déconnecté.'),
         ]);
-        return $this->redirectToRoute("login");
+   
+        return $this->redirectToRoute('login');
     }
 
         /**
@@ -130,7 +131,7 @@ class GlobalController extends AbstractController
             $mailer->send($message);
 
             // On crée le message flash de confirmation
-            $this->addFlash('message', 'E-mail de réinitialisation du mot de passe envoyé !');
+            $this->addFlash('success', 'E-mail de réinitialisation du mot de passe envoyé !');
 
             // On redirige vers la page de login
             return $this->redirectToRoute('login');
@@ -169,7 +170,7 @@ class GlobalController extends AbstractController
             $entityManager->flush();
 
             // On crée le message flash
-            $this->addFlash('message', 'Votre mot de passe a bien été mis à jour.');
+            $this->addFlash('success', 'Votre mot de passe a bien été mis à jour.');
 
             // On redirige vers la page de connexion
             return $this->redirectToRoute('login');

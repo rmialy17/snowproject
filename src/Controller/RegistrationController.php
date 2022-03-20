@@ -55,7 +55,7 @@ class RegistrationController extends AbstractController
             $mail = (new Email())
             ->from('mialy.razaf@gmail.com')
             ->to($user->getEmail())
-            ->subject('Mon beau sujet')
+            ->subject('Activation de votre compte')
             ->html(
                 $this->renderView(
                     'emails/activation.html.twig', ['token' => $user->getActivationToken()]
@@ -65,8 +65,11 @@ class RegistrationController extends AbstractController
          ;
    
          $mailer->send($mail);
+         $this->addFlash('success', "Votre demande d'inscription a bien été enregistrée. Un email d'activation vous a été envoyé.");
+         return $this->redirectToRoute('admin');
          
         }
+
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
@@ -81,7 +84,7 @@ class RegistrationController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre email a bien été vérifié.');
 
         return $this->redirectToRoute('accueil');
     }
@@ -97,19 +100,29 @@ class RegistrationController extends AbstractController
         // Si aucun utilisateur n'est associé à ce token
         if(!$user){
             // On renvoie une erreur 404
-            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+            // throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+             // On génère un message
+        $this->addFlash('warning', 'Cet utilisateur n\'existe pas ou est déja activé');
+
+        // On retourne à l'accueil
+        return $this->redirectToRoute('app_register');
         }
 
+         if ($user !== null){
         // On supprime le token
-        $user->setActivationToken(null);
+       $user->setActivationToken(null);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
-
+       
+      
         // On génère un message
-        $this->addFlash('message', 'Utilisateur activé avec succès');
+        $this->addFlash('success', 'Utilisateur activé avec succès');
 
         // On retourne à l'accueil
-        return $this->redirectToRoute('accueil');
+        return $this->redirectToRoute('login');
+        }
     }
+
+    
 }

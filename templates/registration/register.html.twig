@@ -7,7 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    
+{% block message %}
+{% for message in app.flashes('warning') %}
+    <div class="alert alert-danger">
+            {{ message }}</div>
+    {% endfor %}
+{% endblock %}
 <div id="page-top" class="index">
 <div class="master-wrapper">
     <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="images/imageHome2.jpg" data-speed="0.7">
