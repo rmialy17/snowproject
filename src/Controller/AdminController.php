@@ -57,6 +57,7 @@ class AdminController extends AbstractController
             // dd($imagetop_upload);
             if($form->isSubmitted() && $form->isValid()){
 
+             $figure->setCreatedAt(new \DateTime('now'));
              $figure->setUser($user);
              $figure->setNom($nom);
              $figure->setCategorie($categorie);

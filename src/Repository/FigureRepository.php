@@ -23,7 +23,8 @@ class FigureRepository extends ServiceEntityRepository
 
     public function findAllWithPagination() : Query{
         return $this->createQueryBuilder('v')
-            ->getQuery();
+            ->orderBy('v.createdAt', 'DESC')
+            ->getQuery();   
     }
 
     // public function findAllComments() : Query{

@@ -112,6 +112,11 @@ class Figure
 
     private $slug;
 
+     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
 
     public function __construct()
     {
@@ -327,6 +332,18 @@ class Figure
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
