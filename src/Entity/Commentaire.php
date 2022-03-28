@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use App\Entity\Figure;
 use App\Entity\Utilisateur;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,6 +27,7 @@ class Commentaire
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(
+
      *      max = 2000,
      *      maxMessage = "Votre commentaire ne peut pas contenir plus que {{ limit }} caractères !"
      * )

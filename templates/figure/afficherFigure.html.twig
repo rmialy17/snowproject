@@ -59,6 +59,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -192,13 +193,16 @@
             <td><center><strong>{{commentaires.contenu}}</strong></center></td> 
         
         </tr>   
+
         {% endfor %}
     </tbody>
 </table>
 
 </div>
 </div>
+
    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+
 <div class="container">
     <br><h2 class="section-heading">AJOUTER UN COMMENTAIRE</h2>
     <hr> 

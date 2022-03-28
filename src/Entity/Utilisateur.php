@@ -16,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * message="L'utilisateur existe déjà."
  * )
  * @UniqueEntity(fields={"email"}, message="Il existe déja un compte avec cet email.")
+
  */
 class Utilisateur implements UserInterface
 {
@@ -43,12 +44,13 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    
     private $password;
 
-     /**
-     * @Assert\EqualTo(propertyPath="password",message="Les mdp ne correspondent pas")
-     */
-    private $verifPassword;
+    //  /**
+    //  * @Assert\EqualTo(propertyPath="password",message="Les mdp ne correspondent pas")
+    //  */
+    // private $verifPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
