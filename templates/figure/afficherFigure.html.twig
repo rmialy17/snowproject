@@ -198,12 +198,12 @@
 
 </div>
 </div>
-
+   {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
 <div class="container">
     <br><h2 class="section-heading">AJOUTER UN COMMENTAIRE</h2>
     <hr> 
     <div class="row">
-        {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+     
         {{ form_start(commentForm)}}
         <p><div><strong>Votre commentaire :</strong></div></p> 
         {{ form_widget(commentForm.contenu) }}

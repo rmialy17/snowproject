@@ -22,7 +22,7 @@ class Image
      * @ORM\Column(type="string", length=255)
      * @Assert\Image(
      *      maxSize = "1M",
-     *      maxSizeMessage = "Votre avatar ne doit pas dépasser 1 Mo",
+     *      maxSizeMessage = "Vos images ne doivent pas dépasser 1 Mo",
      * )
      */
     private $name;

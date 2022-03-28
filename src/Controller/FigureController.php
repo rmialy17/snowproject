@@ -22,13 +22,12 @@ class FigureController extends AbstractController
      */
     public function index(FigureRepository $repo, PaginatorInterface $paginatorInterface, Request $request)
     {
+       
         $figures = $paginatorInterface->paginate(
             $repo->findAllWithPagination(),
             $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/
+            6, /*limit per page*/
         );
-
-     
         
         return $this->render('figure/figures.html.twig', [
             "figures" => $figures,
